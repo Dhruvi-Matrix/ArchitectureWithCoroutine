@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">ArchitectureWithCoroutine</string>
+    <string name="search_movies">Search Movie</string>
+    <string name="todo">todo</string>
+</resources>

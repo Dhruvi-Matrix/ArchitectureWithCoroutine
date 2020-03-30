@@ -19,12 +19,13 @@ class MainActivity : AppCompatActivity() {
 
         button.setOnClickListener {
             progress_bar.visibility=View.VISIBLE
-            viewModel.fetchMovies()
+            viewModel.fetchPosts()
         }
 
         viewModel.observableMovieList.observe(this, Observer {
             if(it.isNotEmpty()){
                 progress_bar.visibility=View.GONE
+
                 Toast.makeText(this,"You have got response size:" +it.size,Toast.LENGTH_SHORT).show()
             }
         })

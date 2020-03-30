@@ -1,9 +1,8 @@
 package com.example.architecturewithcoroutine.framework
 
-import com.example.architecturewithcoroutine.data.network.ApiUrls
 import com.example.architecturewithcoroutine.ArchitectureApplication
 import com.example.architecturewithcoroutine.Utils
-import com.example.architecturewithcoroutine.data.models.Response
+import com.example.architecturewithcoroutine.data.models.Post
 import com.example.architecturewithcoroutine.data.network.ResponseHandler
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import okhttp3.Interceptor
@@ -15,6 +14,7 @@ import retrofit2.http.*
 
 
 object RetrofitService {
+
 
 
     val networkModuleDi = module {
@@ -45,13 +45,13 @@ object RetrofitService {
 
             Retrofit.Builder()
                 .client(okHttpClient)
-                .baseUrl(ApiUrls.baseUrl)
+                .baseUrl("https://jsonplaceholder.typicode.com")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
         }
         factory {
-            (get<Retrofit>()).create<MovieListApi>(
-                MovieListApi::class.java
+            (get<Retrofit>()).create<ApiInterface>(
+                ApiInterface::class.java
             )
         }
         single {
@@ -63,12 +63,7 @@ object RetrofitService {
 
 }
 
-interface MovieListApi {
-    //http://www.omdbapi.com/?s=inter&apikey=13b629a1&type=movie
-    @GET("/")
-    suspend fun searchMovie(
-        @Query("apikey") apikey: String, @Query("s") searchString: String, @Query(
-            "type"
-        ) type: String
-    ): Response
+interface ApiInterface {
+    @GET("/posts")
+    suspend fun getPost() : List<Post>
 }

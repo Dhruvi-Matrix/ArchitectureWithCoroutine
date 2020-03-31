@@ -2,9 +2,11 @@ package com.example.architecturewithcoroutine.data
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
+import androidx.test.core.app.ActivityScenario.launch
 import com.example.architecturewithcoroutine.data.network.ResponseStatus
 import kotlinx.coroutines.*
 import kotlinx.coroutines.android.awaitFrame
+import kotlin.coroutines.coroutineContext
 
 /*
  * Hero of our application. It performs whole flow of data.
@@ -12,6 +14,8 @@ import kotlinx.coroutines.android.awaitFrame
 abstract class DataManager<RequestType, ResultType> {
 
     private val result: MediatorLiveData<ResponseStatus<ResultType>> = MediatorLiveData()
+    private val job = SupervisorJob()
+    private val coroutineContext = Dispatchers.IO + job
 
     init {
         result.value = ResponseStatus.loading(null)
@@ -68,21 +72,33 @@ abstract class DataManager<RequestType, ResultType> {
         result.addSource(sourceNetwork!!) { dataFromNetwork ->
             result.removeSource(sourceNetwork)
             result.removeSource(sourceDatabase)
-            GlobalScope.launch(Dispatchers.IO){
-                val processedData = processResponse(dataFromNetwork)
-                if (processedData == null) {
-                    launch { setValue(ResponseStatus.error("Not Found", null)) }
+            CoroutineScope(coroutineContext).launch{
+                withContext(Dispatchers.IO) {
+                    val processedData = processResponse(dataFromNetwork)
+                    if (processedData == null) {
+                        withContext(Dispatchers.Main) {
+                            setValue(
+                                ResponseStatus.error(
+                                    "Not Found",
+                                    null
+                                )
+                            )
+                        }
 
+                    }
+
+                    clearPreviousData()
+                    saveDataToDatabase(processedData!!)
+                    withContext(Dispatchers.Main) {
+                        result.addSource(loadFromDatabase()) { newDataFromDatabase ->
+                            setValue(
+                                ResponseStatus.success(newDataFromDatabase)
+                            )
+                        }
+                    }
                 }
 
-                clearPreviousData()
-                saveDataToDatabase(processedData!!)
-               launch {
-                    result.addSource(loadFromDatabase()) { newDataFromDatabase -> setValue(ResponseStatus.success(newDataFromDatabase)) }
-                }
             }
-
-
         }
     }
 }

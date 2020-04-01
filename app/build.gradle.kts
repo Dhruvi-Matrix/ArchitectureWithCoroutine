@@ -8,6 +8,8 @@ plugins {
 android {
     compileSdkVersion(29)
     buildToolsVersion= "29.0.2"
+    dataBinding.isEnabled=true
+
     defaultConfig {
         applicationId ="com.example.architecturewithcoroutine"
         minSdkVersion(21)
@@ -68,4 +70,5 @@ dependencies {
     implementation(Dependencies.TestLibraries.jUnitTest)
 
 
+    kapt(Dependencies.Android.databinding)
 }

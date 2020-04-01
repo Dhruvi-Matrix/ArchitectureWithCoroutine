@@ -1,6 +1,6 @@
 package com.example.architecturewithcoroutine.data.network
 
-data class ResponseStatus<out T>(val status: Status, val data: T?, val message: String?) {
+ class ResponseStatus<out T>(val status: Status, val data: T?, val message: String?) {
     companion object {
         fun <T> success(data: T?): ResponseStatus<T> {
             return ResponseStatus(
@@ -27,10 +27,10 @@ data class ResponseStatus<out T>(val status: Status, val data: T?, val message: 
             
         }
     }
+     enum class Status {
+         RUNNING,
+         SUCCESS,
+         FAILED
+     }
 }
 
-enum class Status {
-    RUNNING,
-    SUCCESS,
-    FAILED
-}

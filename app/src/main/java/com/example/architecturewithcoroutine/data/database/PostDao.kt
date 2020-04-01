@@ -14,5 +14,5 @@ interface PostDao {
     suspend fun insertData(dataList:List<Post>)
 
     @Query("Select * from Post")
-    suspend fun getAllData():LiveData<List<Post>>
+    fun getAllData():LiveData<List<Post>>
 }

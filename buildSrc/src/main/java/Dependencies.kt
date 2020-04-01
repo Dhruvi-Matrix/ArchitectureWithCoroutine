@@ -27,6 +27,9 @@ object Dependencies{
         const val koinVersion="2.1.0"
         const val stethoVersion="1.5.1"
 
+        const val databindingVersion="2.3.1"
+
+
     }
 
     const val kotlinStdLib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.kotlinVersion}"
@@ -48,6 +51,8 @@ object Dependencies{
 
         const val room="androidx.room:room-ktx:${Versions.roomVersion}"
         const val roomAnnotation="androidx.room:room-compiler:${Versions.roomVersion}"
+
+        const val databinding="com.android.databinding:compiler:${Versions.databindingVersion}"
 
         const val retrofit="com.squareup.retrofit2:retrofit:${Versions.retrofitVersion}"
         const val retrofitConversion="com.squareup.retrofit2:converter-gson:${Versions.retrofitConverterVersion}"

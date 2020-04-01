@@ -2,11 +2,8 @@ package com.example.architecturewithcoroutine.data
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
-import androidx.test.core.app.ActivityScenario.launch
 import com.example.architecturewithcoroutine.data.network.ResponseStatus
 import kotlinx.coroutines.*
-import kotlinx.coroutines.android.awaitFrame
-import kotlin.coroutines.coroutineContext
 
 /*
  * Hero of our application. It performs whole flow of data.
@@ -18,11 +15,11 @@ abstract class DataManager<RequestType, ResultType> {
     private val coroutineContext = Dispatchers.IO + job
 
     init {
-        result.value = ResponseStatus.loading(null)
+        result.postValue(ResponseStatus.loading(null))
         val sourceDatabase = loadFromDatabase()
         result.addSource(sourceDatabase) { data ->
             result.removeSource(sourceDatabase)
-            if (shouldFetchData(data)) {
+            if (shouldFetchData()) {
                 fetchFromNetwork(sourceDatabase)
             } else {
                 result.addSource(sourceDatabase) { newDataFromDatabase -> setValue(ResponseStatus.success(newDataFromDatabase)) }
@@ -39,7 +36,7 @@ abstract class DataManager<RequestType, ResultType> {
      * This method works asynchronously by Coroutine.*/
     protected abstract fun loadFromNetwork(): LiveData<RequestType>?
 
-    protected abstract fun shouldFetchData(data: ResultType?): Boolean
+    protected abstract fun shouldFetchData(): Boolean
 
     protected abstract fun saveDataToDatabase(data: ResultType)
 

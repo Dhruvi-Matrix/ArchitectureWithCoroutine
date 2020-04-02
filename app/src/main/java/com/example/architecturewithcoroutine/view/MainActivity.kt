@@ -26,8 +26,8 @@ class MainActivity : AppCompatActivity() {
         activityMainBinding.mainPresenter = mainPresenter
 
         activityMainBinding.button.setOnClickListener {
-            activityMainBinding.progressBar.visibility=View.VISIBLE
             mainPresenter.getPosts()
+            mainPresenter.setPostListTrigger(true)
         }
         linearLayoutManager = LinearLayoutManager(this)
         activityMainBinding.recyclerView.layoutManager = linearLayoutManager
@@ -35,13 +35,5 @@ class MainActivity : AppCompatActivity() {
         postAdapter = PostAdapter(layoutInflater)
         activityMainBinding.recyclerView.adapter = postAdapter
 
-      /*  viewModel.observableMovieList.observe(this, Observer {
-            if(it.isNotEmpty()){
-                activityMainBinding.progressBar.visibility=View.GONE
-                postAdapter.setList(it)
-                postAdapter.notifyDataSetChanged()
-                Toast.makeText(this,"You have got response size:" +it.size,Toast.LENGTH_SHORT).show()
-            }
-        })*/
     }
 }

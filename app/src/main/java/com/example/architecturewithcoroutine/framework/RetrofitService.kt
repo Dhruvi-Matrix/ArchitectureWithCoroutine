@@ -5,6 +5,7 @@ import com.example.architecturewithcoroutine.Utils
 import com.example.architecturewithcoroutine.data.models.Post
 import com.example.architecturewithcoroutine.data.network.ResponseHandler
 import com.facebook.stetho.okhttp3.StethoInterceptor
+import kotlinx.coroutines.Deferred
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import org.koin.dsl.module

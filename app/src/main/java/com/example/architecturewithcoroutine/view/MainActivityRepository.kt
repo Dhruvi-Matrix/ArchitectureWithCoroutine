@@ -55,7 +55,7 @@ class MainActivityRepository:KoinComponent {
             }
 
             override fun clearPreviousData() {
-
+                postDatabase.movieDao().removeAllPost()
             }
 
             override fun processResponse(response: ResponseStatus<List<Post>>): List<Post>? {

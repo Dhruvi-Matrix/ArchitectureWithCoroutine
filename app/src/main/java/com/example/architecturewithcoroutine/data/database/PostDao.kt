@@ -15,4 +15,7 @@ interface PostDao {
 
     @Query("Select * from Post")
     fun getAllData():LiveData<List<Post>>
+
+    @Query("DELETE FROM Post")
+    fun removeAllPost()
 }

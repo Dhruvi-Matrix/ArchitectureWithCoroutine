@@ -47,6 +47,7 @@ object Dependencies{
         const val legacySupport="androidx.legacy:legacy-support-v4:${Versions.legacySupportVersion}"
 
         const val lifecycle="androidx.lifecycle:lifecycle-extensions:${Versions.lifecycleVersion}"
+        const val lifecycleLiveData="androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycleVersion}"
         const val lifecycleViewModel="androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycleViewModelVersion}"
 
         const val room="androidx.room:room-ktx:${Versions.roomVersion}"

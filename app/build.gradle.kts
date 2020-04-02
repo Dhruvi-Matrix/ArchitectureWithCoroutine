@@ -41,6 +41,7 @@ dependencies {
     implementation(Dependencies.Android.legacySupport)
 
     implementation(Dependencies.Android.lifecycle)
+    implementation(Dependencies.Android.lifecycleLiveData)
     implementation(Dependencies.Android.lifecycleViewModel)
 
     implementation(Dependencies.Android.retrofit)

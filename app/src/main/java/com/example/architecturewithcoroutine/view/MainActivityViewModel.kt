@@ -16,13 +16,25 @@ class MainActivityViewModel : ViewModel(),KoinComponent {
     private val job = SupervisorJob()
     private val coroutineContext = Dispatchers.IO + job
 
-    var observableMovieList: MutableLiveData<ResponseStatus<List<Post>>> = MutableLiveData()
 
-    fun fetchPosts(){
-        viewModelScope.launch(coroutineContext) {
-              observableMovieList = repository.getPost() as MutableLiveData<ResponseStatus<List<Post>>>
+    private var postList: MutableLiveData<List<Post>>
 
-        }
+    private var postListTrigger: MutableLiveData<Boolean>
 
+    init{
+        postList= MutableLiveData()
+        postListTrigger = MutableLiveData()
+    }
+
+    internal
+    val observablePostList: LiveData<ResponseStatus<List<Post>>>
+        get() = Transformations.switchMap(postListTrigger) { repository.getPost() }
+
+    fun getPostListTrigger(): MutableLiveData<Boolean> {
+        return postListTrigger
+    }
+
+    fun getPostList(): MutableLiveData<List<Post>> {
+        return postList
     }
 }

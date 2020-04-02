@@ -4,6 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+        <import type="java.lang.String" />
         <variable
             name="mainPresenter"
             type="com.example.architecturewithcoroutine.view.MainPresenter" />
@@ -32,7 +33,7 @@
             android:indeterminate="false"
             android:indeterminateBehavior="cycle"
             android:padding="16dp"
-            android:visibility="gone"
+            android:visibility="@={mainPresenter.isLoading ? visible : gone}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

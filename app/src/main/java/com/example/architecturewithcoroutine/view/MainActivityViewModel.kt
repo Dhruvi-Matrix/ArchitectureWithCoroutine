@@ -17,14 +17,9 @@ class MainActivityViewModel : ViewModel(),KoinComponent {
     private val coroutineContext = Dispatchers.IO + job
 
 
-    private var postList: MutableLiveData<List<Post>>
+    private var postList: MutableLiveData<List<Post>> = MutableLiveData()
 
-    private var postListTrigger: MutableLiveData<Boolean>
-
-    init{
-        postList= MutableLiveData()
-        postListTrigger = MutableLiveData()
-    }
+    private var postListTrigger: MutableLiveData<Boolean> = MutableLiveData()
 
     internal
     val observablePostList: LiveData<ResponseStatus<List<Post>>>

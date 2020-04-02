@@ -6,10 +6,7 @@ import androidx.lifecycle.Observer
 import com.example.architecturewithcoroutine.data.models.Post
 import com.example.architecturewithcoroutine.data.network.ResponseStatus
 
-class MainPresenter(
-    private val viewModel: MainActivityViewModel,
-    private val mainActivity: MainActivity
-) {
+class MainPresenter(private val viewModel: MainActivityViewModel, private val mainActivity: MainActivity) {
     //request model
     private  var postListTrigger: MutableLiveData<Boolean>
 
@@ -20,7 +17,7 @@ class MainPresenter(
 
 
     init{
-        isLoading.postValue(false)
+        isLoading.value=false
         postListTrigger=viewModel.getPostListTrigger()
         postList = viewModel.getPostList()
     }
@@ -32,17 +29,17 @@ class MainPresenter(
     private fun consumePostResponse(it: ResponseStatus<List<Post>>) {
         when(it.status){
             ResponseStatus.Status.RUNNING -> {
-                isLoading.postValue(true)
+                isLoading.value=true
                 Log.d("TAG","RUNNING")
             }
             ResponseStatus.Status.SUCCESS ->{
-                isLoading.postValue(false)
+                isLoading.value=false
                 Log.d("TAG","SUCCESS")
                 postList.value=it.data
 
             }
             ResponseStatus.Status.FAILED -> {
-                isLoading.postValue(true)
+                isLoading.value=true
                 Log.d("TAG","FAILED")
             }
         }

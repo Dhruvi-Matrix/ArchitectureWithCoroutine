@@ -1,15 +1,12 @@
 package com.example.architecturewithcoroutine.view
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.test.core.app.ActivityScenario.launch
-import com.example.architecturewithcoroutine.data.DataManager
 import com.example.architecturewithcoroutine.data.database.PostDatabase
 import com.example.architecturewithcoroutine.data.models.Post
 import com.example.architecturewithcoroutine.data.network.ResponseHandler
 import com.example.architecturewithcoroutine.data.network.ResponseStatus
+import com.example.architecturewithcoroutine.data.resultLiveData
 import com.example.architecturewithcoroutine.framework.ApiInterface
-import com.example.architecturewithcoroutine.framework.helpers.ContextProviders
 import kotlinx.coroutines.*
 import org.koin.core.KoinComponent
 import org.koin.core.inject
@@ -24,7 +21,7 @@ class MainActivityRepository : KoinComponent {
 
 
 
-    fun getPost(): LiveData<ResponseStatus<List<Post>>> {
+    /*fun getPost(): LiveData<ResponseStatus<List<Post>>> {
         return object : DataManager<ResponseStatus<List<Post>>, List<Post>>(ContextProviders.getInstance()) {
             override fun loadFromDatabase(): LiveData<List<Post>> {
                 return postDatabase.movieDao().getAllData()
@@ -63,5 +60,12 @@ class MainActivityRepository : KoinComponent {
             }
 
         }.toLiveData()
+    }*/
+
+    fun getPosts():LiveData<ResponseStatus<List<Post>>>{
+        return resultLiveData(
+              databaseQuery = { postDatabase.movieDao().getAllData() },
+              networkCall = { ResponseStatus.success(apiInterface.getPost()) },
+              saveCallResult = { postDatabase.movieDao().insertData(it) })
     }
 }

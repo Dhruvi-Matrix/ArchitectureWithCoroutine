@@ -13,23 +13,8 @@ import org.koin.core.inject
 class MainActivityViewModel : ViewModel(),KoinComponent {
 
     private val repository : MainActivityRepository by inject()
-    private val job = SupervisorJob()
-    private val coroutineContext = Dispatchers.IO + job
 
 
-    private var postList: MutableLiveData<List<Post>> = MutableLiveData()
 
-    private var postListTrigger: MutableLiveData<Boolean> = MutableLiveData()
-
-    internal
-    val observablePostList: LiveData<ResponseStatus<List<Post>>>
-        get() = Transformations.switchMap(postListTrigger) { repository.getPost() }
-
-    fun getPostListTrigger(): MutableLiveData<Boolean> {
-        return postListTrigger
-    }
-
-    fun getPostList(): MutableLiveData<List<Post>> {
-        return postList
-    }
+    var postListLiveData:LiveData<ResponseStatus<List<Post>>> = repository.getPosts()
 }

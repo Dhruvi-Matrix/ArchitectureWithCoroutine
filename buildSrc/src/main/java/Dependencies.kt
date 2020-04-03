@@ -1,7 +1,7 @@
 
 object Dependencies{
     object Versions {
-        const val lifecycleVersion="2.1.0"
+        const val lifecycleVersion="2.2.0"
         const val lifecycleViewModelVersion="2.3.0-alpha01"
 
         const val constraintLayoutVersion = "2.0.0-alpha2"
@@ -47,7 +47,7 @@ object Dependencies{
         const val legacySupport="androidx.legacy:legacy-support-v4:${Versions.legacySupportVersion}"
 
         const val lifecycle="androidx.lifecycle:lifecycle-extensions:${Versions.lifecycleVersion}"
-        const val lifecycleLiveData="androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycleVersion}"
+        const val lifecycleLiveData="androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycleViewModelVersion}"
         const val lifecycleViewModel="androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycleViewModelVersion}"
 
         const val room="androidx.room:room-ktx:${Versions.roomVersion}"

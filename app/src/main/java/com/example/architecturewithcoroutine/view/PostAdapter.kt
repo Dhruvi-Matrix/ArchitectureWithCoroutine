@@ -1,20 +1,20 @@
 package com.example.architecturewithcoroutine.view
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.architecturewithcoroutine.R
 import com.example.architecturewithcoroutine.data.models.Post
-import com.example.architecturewithcoroutine.databinding.PostItemBinding
 import kotlinx.android.synthetic.main.post_item.view.*
 
-class PostAdapter(private val layoutInflater: LayoutInflater):RecyclerView.Adapter<PostAdapter.RowViewHolder>() {
+class PostAdapter:RecyclerView.Adapter<PostAdapter.RowViewHolder>() {
 
     private var postList:List<Post>? = listOf()
-    private lateinit var itemBinding: PostItemBinding
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RowViewHolder {
-        itemBinding=PostItemBinding.inflate(layoutInflater,parent,false)
-        return RowViewHolder(itemBinding)
+        val itemView= LayoutInflater.from(parent.context).inflate(R.layout.post_item,parent,false)
+        return RowViewHolder(itemView)
     }
 
     override fun getItemCount(): Int {
@@ -27,8 +27,8 @@ class PostAdapter(private val layoutInflater: LayoutInflater):RecyclerView.Adapt
             val post = postList?.get(rowPos)
             holder.itemView.apply {
 
-              /*  post_title_tv.text=post?.title
-                post_body_tv.text=post?.body*/
+                post_title_tv.text=post?.title
+                post_body_tv.text=post?.body
             }
         }
     }
@@ -37,5 +37,5 @@ class PostAdapter(private val layoutInflater: LayoutInflater):RecyclerView.Adapt
         this.postList=it
     }
 
-    inner class RowViewHolder(itemBinding: PostItemBinding) :RecyclerView.ViewHolder(itemBinding.root)
+    inner class RowViewHolder(itemView: View) :RecyclerView.ViewHolder(itemView)
 }

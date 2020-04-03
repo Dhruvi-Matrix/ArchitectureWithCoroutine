@@ -7,15 +7,15 @@ import com.example.architecturewithcoroutine.data.models.Post
 import com.example.architecturewithcoroutine.data.network.ResponseStatus
 
 class MainPresenter(private val viewModel: MainActivityViewModel, private val mainActivity: MainActivity) {
-    //request model
+    /*//request model
     private  var postListTrigger: MutableLiveData<Boolean>
 
     //response model
     private  var postList: MutableLiveData<List<Post>>
 
-    var isLoading: MutableLiveData<Boolean> = MutableLiveData()
+    var isLoading: MutableLiveData<Boolean> = MutableLiveData()*/
 
-
+/*
     init{
         isLoading.value=false
         postListTrigger=viewModel.getPostListTrigger()
@@ -51,6 +51,6 @@ class MainPresenter(private val viewModel: MainActivityViewModel, private val ma
 
     fun getPostList(): MutableLiveData<List<Post>> {
         return postList
-    }
+    }*/
 
 }

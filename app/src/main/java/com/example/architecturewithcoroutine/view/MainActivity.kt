@@ -2,11 +2,14 @@ package com.example.architecturewithcoroutine.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import androidx.databinding.DataBindingUtil
+import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.architecturewithcoroutine.R
-import com.example.architecturewithcoroutine.databinding.ActivityMainBinding
+import com.example.architecturewithcoroutine.data.network.ResponseStatus
+import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
@@ -14,26 +17,38 @@ class MainActivity : AppCompatActivity() {
     private val viewModel: MainActivityViewModel by inject()
     private lateinit var postAdapter:PostAdapter
     private lateinit var linearLayoutManager: LinearLayoutManager
-    private lateinit var activityMainBinding: ActivityMainBinding
-    private lateinit var mainPresenter: MainPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        setContentView(R.layout.activity_main)
 
-
-        mainPresenter = MainPresenter(viewModel,this)
-        activityMainBinding.mainPresenter = mainPresenter
-
-        activityMainBinding.button.setOnClickListener {
-            mainPresenter.getPosts()
-            mainPresenter.setPostListTrigger(true)
-        }
         linearLayoutManager = LinearLayoutManager(this)
-        activityMainBinding.recyclerView.layoutManager = linearLayoutManager
-        activityMainBinding.recyclerView.isNestedScrollingEnabled = false
-        postAdapter = PostAdapter(layoutInflater)
-        activityMainBinding.recyclerView.adapter = postAdapter
+        recycler_view.layoutManager = linearLayoutManager
+        recycler_view.isNestedScrollingEnabled = false
+        postAdapter = PostAdapter()
+        recycler_view.adapter = postAdapter
+
+
+        button.setOnClickListener {
+            viewModel.postListLiveData.observe(this, Observer { result ->
+                when (result.status) {
+                    ResponseStatus.Status.RUNNING -> progress_bar.visibility=View.VISIBLE
+                    ResponseStatus.Status.SUCCESS -> {
+                        progress_bar.visibility=View.GONE
+                        result.data?.let {
+                            Log.d("MainActivity","The list is" + it.size)
+                            postAdapter.setList(it)
+                            postAdapter.notifyDataSetChanged()
+                        }
+                    }
+                    ResponseStatus.Status.FAILED -> {
+                        progress_bar.visibility=View.GONE
+                        Toast.makeText(this,"The data list is:" +result.data?.size,Toast.LENGTH_SHORT).show()
+                    }
+                }
+            })
+        }
+
 
     }
 }

@@ -20,48 +20,6 @@ class MainActivityRepository : KoinComponent {
     private val job = SupervisorJob()
 
 
-
-    /*fun getPost(): LiveData<ResponseStatus<List<Post>>> {
-        return object : DataManager<ResponseStatus<List<Post>>, List<Post>>(ContextProviders.getInstance()) {
-            override fun loadFromDatabase(): LiveData<List<Post>> {
-                return postDatabase.movieDao().getAllData()
-            }
-
-            override fun loadFromNetwork(): LiveData<ResponseStatus<List<Post>>>? = runBlocking  {
-
-                val postListData = MutableLiveData<ResponseStatus<List<Post>>>()
-
-                val apiData = apiInterface.getPost()
-                postListData.postValue(ResponseStatus.success(apiData))
-
-                return@runBlocking postListData
-            }
-
-            override fun shouldFetchData(sourceDatabase: LiveData<List<Post>>): Boolean {
-                return true
-            }
-
-            override fun saveDataToDatabase(data: List<Post>) = runBlocking {
-
-                withContext(Dispatchers.IO) {
-                    postDatabase.movieDao().insertData(data)
-                }
-
-            }
-
-            override fun clearPreviousData() = runBlocking {
-                withContext(Dispatchers.IO) {
-                    postDatabase.movieDao().removeAllPost()
-                }
-            }
-
-            override fun processResponse(response: ResponseStatus<List<Post>>): List<Post>? {
-                return response.data
-            }
-
-        }.toLiveData()
-    }*/
-
     fun getPosts():LiveData<ResponseStatus<List<Post>>>{
         return resultLiveData(
               databaseQuery = { postDatabase.movieDao().getAllData() },

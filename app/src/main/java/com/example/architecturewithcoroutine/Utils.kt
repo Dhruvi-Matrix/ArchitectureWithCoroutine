@@ -1,5 +1,6 @@
 package com.example.architecturewithcoroutine
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.net.ConnectivityManager
@@ -22,4 +23,15 @@ object Utils {
         inputMethodManager.hideSoftInputFromWindow(view?.windowToken, 0)
     }
 
+    class NetManager  constructor(private val applicationContext: Context) {
+
+        val isConnectedToInternet: Boolean
+            @SuppressLint("MissingPermission")
+            get() {
+                val conManager =
+                    applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+                val network = conManager.activeNetworkInfo
+                return network != null && network.isConnected
+            }
+    }
 }

@@ -35,15 +35,15 @@ class MainActivity : AppCompatActivity() {
                     ResponseStatus.Status.RUNNING -> progress_bar.visibility=View.VISIBLE
                     ResponseStatus.Status.SUCCESS -> {
                         progress_bar.visibility=View.GONE
-                        result.data?.let {
-                            Log.d("MainActivity","The list is" + it.size)
+                        result.data.let {
+                            Log.d("MainActivity","The list is" + it?.size)
                             postAdapter.setList(it)
                             postAdapter.notifyDataSetChanged()
                         }
                     }
                     ResponseStatus.Status.FAILED -> {
                         progress_bar.visibility=View.GONE
-                        Toast.makeText(this,"The data list is:" +result.data?.size,Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this,result.message,Toast.LENGTH_SHORT).show()
                     }
                 }
             })

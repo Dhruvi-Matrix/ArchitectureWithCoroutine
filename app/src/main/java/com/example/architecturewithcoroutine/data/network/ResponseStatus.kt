@@ -1,24 +1,25 @@
 package com.example.architecturewithcoroutine.data.network
 
- class ResponseStatus<out T>(val status: Status, val data: T?, val message: String?) {
+data class ResponseStatus<out T>(val status: Status, val data: T?, val message: String?) {
+
+    enum class Status {
+        SUCCESS,
+        ERROR,
+        LOADING
+    }
+
     companion object {
-        fun <T> success(data: T?): ResponseStatus<T> {
+        fun <T> success(data: T): ResponseStatus<T> {
             return ResponseStatus(Status.SUCCESS, data, null)
         }
 
-        fun <T> error(msg: String, data: T?): ResponseStatus<T> {
-            return ResponseStatus(Status.FAILED, data, msg)
+        fun <T> error(message: String, data: T? = null): ResponseStatus<T> {
+            return ResponseStatus(Status.ERROR, data, message)
         }
 
-        fun <T> loading(data: T?): ResponseStatus<T> {
-            return ResponseStatus(Status.RUNNING, data, null)
-            
+        fun <T> loading(data: T? = null): ResponseStatus<T> {
+            return ResponseStatus(Status.LOADING, data, null)
         }
     }
-     enum class Status {
-         RUNNING,
-         SUCCESS,
-         FAILED
-     }
 }
 

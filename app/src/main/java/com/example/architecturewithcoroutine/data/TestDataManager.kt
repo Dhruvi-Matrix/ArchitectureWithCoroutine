@@ -21,7 +21,7 @@ fun <T, A> resultLiveData(databaseQuery: suspend () -> LiveData<T>,
                 Log.d("TestDataManager", "the data is:" + responseStatus.data.toString())
                 if (responseStatus.status == ResponseStatus.Status.SUCCESS) {
                     saveCallResult(responseStatus.data!!)
-                } else if (responseStatus.status == ResponseStatus.Status.FAILED) {
+                } else if (responseStatus.status == ResponseStatus.Status.ERROR) {
                     emit(ResponseStatus.error(responseStatus.message.toString(), null))
                     emitSource(source)
                 }

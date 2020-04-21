@@ -6,6 +6,7 @@ object Dependencies{
 
         const val constraintLayoutVersion = "2.0.0-alpha2"
         const val roomVersion = "2.2.2"
+        const val roomCoroutineVersion="2.1.0-alpha04"
 
         const val legacySupportVersion="1.0.0"
         const val coreVersion="1.1.0"
@@ -51,6 +52,7 @@ object Dependencies{
         const val lifecycleViewModel="androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycleViewModelVersion}"
 
         const val room="androidx.room:room-ktx:${Versions.roomVersion}"
+        const val roomCoroutines="androidx.room:room-coroutines:${Versions.roomCoroutineVersion}"
         const val roomAnnotation="androidx.room:room-compiler:${Versions.roomVersion}"
 
         const val databinding="com.android.databinding:compiler:${Versions.databindingVersion}"

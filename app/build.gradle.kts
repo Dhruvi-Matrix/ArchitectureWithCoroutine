@@ -51,6 +51,7 @@ dependencies {
     implementation(Dependencies.Android.okHttpLoggingInterceptor)
 
     implementation(Dependencies.Android.room)
+    implementation(Dependencies.Android.roomCoroutines)
     kapt(Dependencies.Android.roomAnnotation)
 
     implementation(Dependencies.Android.coroutineCore)
